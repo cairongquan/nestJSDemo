@@ -1,3 +1,5 @@
+// cars 服务层 用来处理控制层传递数据与数据库做数据处理 返回给控制层
+
 import { Injectable } from '@nestjs/common';
 import { resType, carType } from 'Interfaces/myInterface'
 import { DB } from '../db/db';

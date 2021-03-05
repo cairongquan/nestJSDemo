@@ -1,3 +1,5 @@
+// cars 控制层 用来处理数据以及返回数据
+
 import { Controller, Delete, Get, Param, Post, Put, Query, Res } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { resType, carType } from 'Interfaces/myInterface';
