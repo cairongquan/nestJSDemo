@@ -1,7 +1,6 @@
 import { Controller, Delete, Get, Param, Post, Put, Query, Res } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { resType, carType } from 'Interfaces/myInterface';
-import { Response } from 'express'
 
 // http://localhost:8087/cars/xxxx 路由
 
@@ -9,7 +8,6 @@ import { Response } from 'express'
 export class CarsController { //导出控制器类
     constructor(private readonly carsService: CarsService) { //构造器 引入service层代码
     }
-
 
     // 动态路由
     /*
@@ -22,7 +20,6 @@ export class CarsController { //导出控制器类
         return id;
     }
 
-    
     // {key:1}
     // @Query('key') 将key属性的值提取出来 
     @Get('/getCarsList') //查看所有车辆列表
@@ -48,12 +45,13 @@ export class CarsController { //导出控制器类
     }
 
     @Get('/finOne') //查找车辆 {id}
-    findOneCar(@Query() data: any): resType {
-        return this.carsService.findOne(data.id);
+    findOneCar(@Query('id') id: string): resType {
+        return this.carsService.findOne(id);
     }
+
     @Delete('/delOne') //删除车辆 {id}
-    delOneCar(@Query() data: any): resType {
-        return this.carsService.delOne(data.id);
+    delOneCar(@Query('id') id: string): resType {
+        return this.carsService.delOne(id);
     }
 
     @Put('/editCar') //修改车辆 {name,creatTime,color,id}

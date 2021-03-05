@@ -3,13 +3,13 @@ import { resType, carType } from 'Interfaces/myInterface'
 import { DB } from '../db/db';
 import randomString from 'string-random';
 
-
 @Injectable()
 export class CarsService {//导出服务层类
+    db:any    
     constructor() {
         this.db = new DB();
     }
-    db: DB
+
     carList: carType[] //汽车数据
 
     getAllCars(): resType { //获取所有车辆数据
