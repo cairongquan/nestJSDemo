@@ -1,6 +1,6 @@
 // cars 控制层 用来处理数据以及返回数据
 
-import { Controller, Delete, Get, Param, Post, Put, Query, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { resType, carType } from 'Interfaces/myInterface';
 
@@ -8,7 +8,9 @@ import { resType, carType } from 'Interfaces/myInterface';
 
 @Controller('cars')
 export class CarsController { //导出控制器类
-    constructor(private readonly carsService: CarsService) { //构造器 引入service层代码
+    // @Inject 装饰器  其参数放入被注入的类的类名
+
+    constructor(@Inject(CarsService) private readonly carsService: CarsService) { //构造器 引入service层代码
     }
 
     // 动态路由
@@ -25,19 +27,12 @@ export class CarsController { //导出控制器类
     // {key:1}
     // @Query('key') 将key属性的值提取出来 
     @Get('/getCarsList') //查看所有车辆列表
-    getAllCarsList(@Query('name') name: string): resType {
-        if (!name) {
-            return {
-                msg: "数据出错",
-                data: null,
-                code: 505
-            }
-        }
+    getAllCarsList(): resType {
         return this.carsService.getAllCars();
     }
 
     @Post('/creatCar') //创建车辆 {name,creatTime,color}
-    creatCarData(@Query() data: carType): resType {
+    creatCarData(@Body() data: carType): resType {
         return this.carsService.creatCar(data);
     }
 
