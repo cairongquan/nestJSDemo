@@ -13,10 +13,29 @@ import { ModuleDemoModule } from './module-demo/module-demo.module';
 
 // typeORM 连接数据库
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { connectConfig } from './connect/config'; //数据库连接配置
+import { connectConfig } from './config'; //数据库连接配置
+
+import { fileData } from './entities/file.entity';
+import { userinfo } from './entities/userInfo.entity';
+import { userinfoAddress } from './entities/userInfoAddress.entity';
+import { artList } from './entities/art.entity';
+
+import { FileController } from './file/file.controller';
+import { FileService } from './file/file.service';
+import { FileModule } from './file/file.module';
+import { ArtListModule } from './art-list/art-list.module';
+
+const ENTITIES = [ //表映射模型文件
+  userinfo,
+  userinfoAddress,
+  fileData,
+  artList
+]
+
+// TypeOrmModule.forRoot链接数据库
 @Module({
-  imports: [CarsModule, ModuleDemoModule, TypeOrmModule.forRoot(connectConfig)],
-  controllers: [AppController, CarsController, ModuleDemoController],
-  providers: [AppService, CarsService, ModuleDemoService],
+  imports: [CarsModule, ModuleDemoModule, TypeOrmModule.forRoot(connectConfig), TypeOrmModule.forFeature([...ENTITIES]), FileModule, ArtListModule],
+  controllers: [AppController, CarsController, ModuleDemoController, FileController],
+  providers: [AppService, CarsService, ModuleDemoService, FileService],
 })
 export class AppModule { }
